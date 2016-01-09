@@ -19,17 +19,21 @@ package com.dmainardi.secApp.business.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Davide Mainardi <ingmainardi at live.com>
  */
 @Entity
+@Table(name = "group_app")
 public class GroupApp implements Serializable {
     @Id
+    @Column(name = "group_name")
     private String groupName;
     
     @ManyToMany(mappedBy = "groups")

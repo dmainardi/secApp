@@ -17,7 +17,13 @@
 package com.dmainardi.secApp.business.boundary;
 
 import com.dmainardi.secApp.business.entity.UserApp;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -43,8 +49,8 @@ public class UserService {
         return null;
     }
     
-    public UserApp readUserApp(Long id) {
-        return em.find(UserApp.class, id);
+    public UserApp readUserApp(String userName) {
+        return em.find(UserApp.class, userName);
     }
     
     public void deleteUserApp(UserApp userApp) {
@@ -57,5 +63,23 @@ public class UserService {
         Root<UserApp> root = query.from(UserApp.class);
         query.select(root);
         return em.createQuery(query).getResultList();
+    }
+    
+    public boolean login(UserApp user) {
+        if (em.find(UserApp.class, user.getUserName()) != null) {
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+                md.update(user.getPassword().getBytes("UTF-8")); // Change this to "UTF-16" if needed
+                byte[] digest = md.digest();
+                BigInteger bigInt = new BigInteger(1, digest);
+                String output = bigInt.toString(16);
+                
+                System.out.println(output);
+            }
+            catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+                return false;
+            }
+        }
+        return false;
     }
 }

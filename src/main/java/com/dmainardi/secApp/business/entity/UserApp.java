@@ -22,7 +22,9 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
@@ -31,15 +33,18 @@ import javax.validation.constraints.NotNull;
  * @author Davide Mainardi <ingmainardi at live.com>
  */
 @Entity
+@Table(name = "user_app")
 public class UserApp implements Serializable{
     @Id
+    @Column(name = "user_name")
     private String userName;
     
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, name = "pass_word")
     private String password;
     
     @ManyToMany
+    @JoinTable(name = "users_groups_app")
     private List<GroupApp> groups;
     
     @Version
