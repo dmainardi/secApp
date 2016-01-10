@@ -22,6 +22,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -44,8 +45,10 @@ public class UserApp implements Serializable{
     private String password;
     
     @ManyToMany
-    @JoinTable(name = "users_groups_app")
-    private List<GroupApp> groups;
+    @JoinTable(name = "users_groups_app",
+            joinColumns = @JoinColumn(name = "user_name"),
+            inverseJoinColumns = @JoinColumn(name = "groups_group_name"))
+    private List<GroupApp> groups;  //joinColumns è necessario perché la colonna deve avere lo stesso nome nella tabella degli utenti ed in quella di scambio
     
     @Version
     private int version;
