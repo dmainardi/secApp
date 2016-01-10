@@ -10,6 +10,6 @@ group-table=users_groups_app:\
 group-name-column=groups_group_name:\
 digest-algorithm=SHA-256:\
 digestrealm-password-enc-algorithm=AES:\
-encoding=hex:\
+encoding=base64:\
 charset=UTF-8 \
 JDBCRealm

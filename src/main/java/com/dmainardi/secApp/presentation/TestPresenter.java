@@ -18,9 +18,9 @@ package com.dmainardi.secApp.presentation;
 
 import com.dmainardi.secApp.business.boundary.TestService;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -58,10 +58,10 @@ public class TestPresenter {
             md = MessageDigest.getInstance(ENCRYPTION_ALGORITHM);
             md.update(bytesOfMessage);
             
-            //return Base64.getEncoder().encodeToString(md.digest());
+            return Base64.getEncoder().encodeToString(md.digest());
             
-            BigInteger bigInteger = new BigInteger(1, md.digest());
-            return String.format("%x", bigInteger);
+            /*BigInteger bigInteger = new BigInteger(1, md.digest());
+            return String.format("%x", bigInteger);*/
 
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             return "Error";
