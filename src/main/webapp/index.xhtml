@@ -9,7 +9,12 @@
         <h1>Secure application</h1>
         <h2>Login or sign up</h2>
         <h:form>
-            
+            <h:link value="Guest page" outcome="guest"/>
+            <h:link value="User page" outcome="/user/user"/>
+            <h:link value="Admin page" outcome="/admin/admin"/>
+            <h:commandButton value="Guest page" action="#{testPresenter.toGuestPage()}" />
+            <h:commandButton value="User page" action="#{testPresenter.toUserPage()}" />
+            <h:commandButton value="Admin page" action="#{testPresenter.toAdminPage()}" />
         </h:form>
     </h:body>
 </html>
