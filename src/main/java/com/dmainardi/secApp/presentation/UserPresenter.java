@@ -19,8 +19,10 @@ package com.dmainardi.secApp.presentation;
 import com.dmainardi.secApp.business.boundary.UserService;
 import com.dmainardi.secApp.business.entity.UserApp;
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -35,6 +37,22 @@ public class UserPresenter implements Serializable {
     UserService userService;
     
     private UserApp user;
+    
+    private UserApp loggedUser;
+
+    public UserApp getLoggedUser() {
+        if (loggedUser == null) {
+            Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+            if (principal != null)
+                loggedUser = userService.readUserApp(principal.getName());
+        }
+        return loggedUser;
+    }
+    
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "index?faces-redirect=true";
+    }
     
     public boolean login() {
         return userService.login(user);

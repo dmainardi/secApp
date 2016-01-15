@@ -18,6 +18,12 @@
         </h:form>
         <h:outputLabel for="hashedPassword" value="Cambiami hashed (SHA-256 base64)"/><br/>
         <h:outputText id="hashedPassword" value="#{testPresenter.cambiamiHashed()}"/>
+        <br/><br/>
+        <h:outputLabel for="loggedUser" value="You are logged as: "/>
+        <h:outputText id="loggedUser" value="#{userPresenter.loggedUser.userName}"/>
+        <h:form>
+            <h:commandButton value="Logout" action="#{userPresenter.logout()}"/>
+        </h:form>
     </h:body>
 </html>
 
