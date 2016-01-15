@@ -20,9 +20,10 @@
         <h:outputText id="hashedPassword" value="#{testPresenter.cambiamiHashed()}"/>
         <br/><br/>
         <h:outputLabel for="loggedUser" value="You are logged as: "/>
-        <h:outputText id="loggedUser" value="#{userPresenter.loggedUser.userName}"/>
+        <h:outputText id="loggedUser" value="#{authenticator.loggedUser.userName}"/>
         <h:form>
-            <h:commandButton value="Logout" action="#{userPresenter.logout()}"/>
+            <h:link value="Change password" outcome="/secured/manageUser/changePassword"/><br/>
+            <h:commandButton value="Logout" action="#{authenticator.logout()}"/>
         </h:form>
     </h:body>
 </html>

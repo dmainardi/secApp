@@ -59,9 +59,6 @@ public class TestPresenter {
             md.update(bytesOfMessage);
             
             return Base64.getEncoder().encodeToString(md.digest());
-            
-            /*BigInteger bigInteger = new BigInteger(1, md.digest());
-            return String.format("%x", bigInteger);*/
 
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             return "Error";

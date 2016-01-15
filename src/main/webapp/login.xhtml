@@ -8,13 +8,13 @@
     <h:body>
         <form name="loginForm" method="POST" action="j_security_check">
             <label for="username">Username</label>
-            <input id="username" type="text" name="j_username"/><br/>
+            <input id="username" type="text" name="j_username" autofocus="true"/><br/>
             <label for="password">Password</label>
             <input id="password" type="password" name="j_password"/><br/>
-            <input type="submit" value="Submit"/>
+            <input type="submit" value="Login"/>
         </form>
         <br/><br/>
-        <a href="/secApp/faces/index.xhtml">Homepage</a>
+        <h:link value="Homepage" outcome="/index.xhtml"/>
     </h:body>
 </html>
 
