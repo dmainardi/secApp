@@ -41,6 +41,7 @@ public class Authenticator implements Serializable {
     UserService userService;
     
     private UserApp loggedUser;
+    private String userName;
     private String oldPassword;
     private String newPassword1;
     private String newPassword2;
@@ -52,6 +53,32 @@ public class Authenticator implements Serializable {
                 loggedUser = userService.readUserApp(principal.getName());
         }
         return loggedUser;
+    }
+    
+    public String createNewUser() {
+        if (loggedUser == null) {
+            if (userService.readUserApp(userName) == null) {
+                if (newPassword1.equals(newPassword2)) {
+                    loggedUser = new UserApp();
+                    loggedUser.setUserName(userName);
+                    loggedUser.setPassword(hashPassword(newPassword1));
+                    userService.saveUserApp(loggedUser);
+                }
+                else {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("New passwords must be equals"));
+                    return null;
+                }
+            }
+            else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("'" + userName + "' is already presenter. Choose another username."));
+                return null;
+            }
+        }
+        else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("You must logout before create a new user"));
+            return null;
+        }
+        return "/index?faces-redirect=true";
     }
     
     public String logout() {
@@ -73,7 +100,7 @@ public class Authenticator implements Serializable {
             }
             else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Old password is not valid"));
-                    return null;
+                return null;
             }
         }
         return "/index?faces-redirect=true";
@@ -96,6 +123,14 @@ public class Authenticator implements Serializable {
         }
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    
     public String getOldPassword() {
         return oldPassword;
     }

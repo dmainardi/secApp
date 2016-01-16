@@ -20,10 +20,12 @@
         <h:outputLabel for="hashedPassword" value="Cambiami hashed (SHA-256 base64)"/><br/>
         <h:outputText id="hashedPassword" value="#{testPresenter.cambiamiHashed()}"/>
         <br/><br/>
+        <h:link value="Sign up" outcome="/createUser"/>
+        <br/>
         <h:outputLabel for="loggedUser" value="You are logged as: "/>
         <h:outputText id="loggedUser" value="#{authenticator.loggedUser.userName}"/>
+        <h:link value="Change password" outcome="/secured/manageUser/changePassword"/>
         <h:form>
-            <h:link value="Change password" outcome="/secured/manageUser/changePassword"/><br/>
             <h:commandButton value="Logout" action="#{authenticator.logout()}"/>
         </h:form>
     </h:body>
