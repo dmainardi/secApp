@@ -17,10 +17,13 @@
 package com.dmainardi.secApp.presentation;
 
 import com.dmainardi.secApp.business.boundary.UserService;
+import com.dmainardi.secApp.business.entity.GroupApp;
 import com.dmainardi.secApp.business.entity.UserApp;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -34,6 +37,9 @@ public class UserPresenter implements Serializable {
     @Inject
     UserService userService;
     
+    @Inject
+    Authenticator authenticator;
+    
     private UserApp user;
     
     public List<UserApp> listUserApps() {
@@ -41,22 +47,31 @@ public class UserPresenter implements Serializable {
     }
         
     public void deleteUserApp(UserApp user) {
-        userService.deleteUserApp(user);
+        if (user.getUserName().equals(authenticator.getLoggedUser().getUserName()))
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("You cannot delete yourself."));
+        else
+            userService.deleteUserApp(user);
     }
     
     public String saveUserApp() {
         userService.saveUserApp(user);
         
-        return "userApps";
+        return "/secured/manageUser/users?faces-redirect=true";
     }
     
     public String detailUserApp(String userName) {
         if (userName == null)
             user = new UserApp();
-        else
-            user = userService.readUserApp(userName);
+        else {
+            if (userName.equals(authenticator.getLoggedUser().getUserName())) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("You cannot change yourself."));
+                return null;
+            }
+            else
+                user = userService.readUserApp(userName);
+        }
         
-        return "userApp";
+        return "/secured/manageUser/user?faces-redirect=true";
     }
 
     public UserApp getUserApp() {
@@ -65,5 +80,9 @@ public class UserPresenter implements Serializable {
 
     public void setUserApp(UserApp userApp) {
         this.user = userApp;
+    }
+    
+    public void removeGroup(GroupApp group) {
+        this.user.getGroups().remove(group);
     }
 }

@@ -89,4 +89,12 @@ public class UserApp implements Serializable{
         this.version = version;
     }
     
+    /**
+     * An activated user belong to one (or more) group
+     * @return true i user is activated, false otherwise
+     */
+    public boolean isActivated() {
+        return !this.groups.isEmpty();
+    }
+    
 }

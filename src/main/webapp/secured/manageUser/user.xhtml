@@ -1,14 +1,29 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>User's details</title>
+        <title>User details</title>
     </h:head>
     <h:body>
-        <h1>User's detatils</h1>
+        <h1>User details</h1>
         <h:form>
-            
+            <h:outputLabel for="username" value="Username"/><br/>
+            <h:outputText id="username" value="#{userPresenter.userApp.userName}"/><br/>
+            <h:outputLabel for="groups" value="Groups"/><br/>
+            <h:dataTable id="groups" value="#{userPresenter.userApp.groups}" var="group" border="1">
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    <h:outputText value="#{group.groupName}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Actions</f:facet>
+                    <h:commandButton value="Remove" action="#{userPresenter.removeGroup(group)}"/>
+                </h:column>
+            </h:dataTable>
+            <h:commandButton value="Save" action="#{userPresenter.saveUserApp()}"/>
+            <h:link value="Return to users" outcome="/secured/manageUser/users"/>
         </h:form>
     </h:body>
 </html>

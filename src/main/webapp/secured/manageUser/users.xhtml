@@ -1,12 +1,32 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Users</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h1>Users' list</h1>
+        <h2>Here you can find all the users registered into the application.</h2>
+        <h:dataTable value="#{userPresenter.listUserApps()}" var="user" border="1">
+            <h:column>
+                <f:facet name="header">Username</f:facet>
+                <h:outputText value="#{user.userName}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Activated?</f:facet>
+                <h:outputText value="#{user.activated}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Actions</f:facet>
+                <h:form>
+                    <h:commandButton value="Open" action="#{userPresenter.detailUserApp(user.userName)}"/>
+                    <h:commandButton value="Delete" action="#{userPresenter.deleteUserApp(user)}"/>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+        <h:link value="Homepage" outcome="/index"/>
     </h:body>
 </html>
 

@@ -55,10 +55,10 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
                 NavigationHandler navigationHandler = fc.getApplication().getNavigationHandler();
                 String errorPage;
                 if ("javax.ejb.EJBAccessException".equals(getRootCause(t).getMessage())) {
-                    errorPage = "unauthorized";
+                    errorPage = "/unauthorized";
                     fc.renderResponse();
                 } else {
-                    errorPage = "error";
+                    errorPage = "/error";
                 }
                 navigationHandler.handleNavigation(fc, null, errorPage + "?faces-redirect=true");
                 fc.renderResponse();

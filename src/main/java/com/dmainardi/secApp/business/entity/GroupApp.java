@@ -17,12 +17,9 @@
 package com.dmainardi.secApp.business.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -35,12 +32,8 @@ public class GroupApp implements Serializable {
     @Id
     @Column(name = "group_name")
     private String groupName;
-    
-    @ManyToMany(mappedBy = "groups")
-    private List<UserApp> users;
 
     public GroupApp() {
-        users = new ArrayList<>();
     }
 
     public String getGroupName() {
@@ -49,14 +42,6 @@ public class GroupApp implements Serializable {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
-    }
-
-    public List<UserApp> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<UserApp> users) {
-        this.users = users;
     }
     
 }
