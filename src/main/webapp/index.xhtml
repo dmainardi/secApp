@@ -8,26 +8,16 @@
     <h:body>
         <h1>Secure application</h1>
         <h2>Login or sign up</h2>
-        <h:link value="Guest page" outcome="guest"/><br/>
-        <h:link value="User page" outcome="/user/user"/><br/>
-        <h:link value="Admin page" outcome="/admin/admin"/><br/>
-        <h:link value="Manage users" outcome="/secured/manageUser/users"/><br/>
-        <h:form>
-            <h:commandButton value="Guest page" action="#{testPresenter.toGuestPage()}" />
-            <h:commandButton value="User page" action="#{testPresenter.toUserPage()}" />
-            <h:commandButton value="Admin page" action="#{testPresenter.toAdminPage()}" />
-        </h:form>
-        <h:outputLabel for="hashedPassword" value="Cambiami hashed (SHA-256 base64)"/><br/>
-        <h:outputText id="hashedPassword" value="#{testPresenter.cambiamiHashed()}"/>
-        <br/><br/>
-        <h:link value="Sign up" outcome="/createUser"/>
-        <br/>
-        <h:outputLabel for="loggedUser" value="You are logged as: "/>
-        <h:outputText id="loggedUser" value="#{authenticator.loggedUser.userName}"/>
-        <h:link value="Change password" outcome="/secured/manageUser/changePassword"/>
-        <h:form>
-            <h:commandButton value="Logout" action="#{authenticator.logout()}"/>
-        </h:form>
+        <h:link value="Manage users" outcome="/secured/manageUser/users"/><br/><br/>
+        <h:link value="Sign up" outcome="/createUser" rendered="#{authenticator.loggedUser == null}"/>
+        <h:panelGroup rendered="#{authenticator.loggedUser != null}">
+            <h:outputLabel for="loggedUser" value="You are logged as: "/>
+            <h:outputText id="loggedUser" value="#{authenticator.loggedUser.userName}"/><br/>
+            <h:link value="Change password" outcome="/secured/manageUser/changePassword"/>
+            <h:form>
+                <h:commandButton value="Logout" action="#{authenticator.logout()}"/>
+            </h:form>
+        </h:panelGroup>
     </h:body>
 </html>
 
