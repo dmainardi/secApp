@@ -22,7 +22,8 @@
                     <h:commandButton value="Remove" action="#{userPresenter.removeGroup(group)}"/>
                 </h:column>
             </h:dataTable>
-            <h:commandButton value="Save" action="#{userPresenter.saveUserApp()}"/>
+            <h:link value="Add group" outcome="/secured/manageUser/chooseGroup"/>
+            <h:commandButton value="Save" action="#{userPresenter.saveUserApp()}"/><br/>
             <h:link value="Return to users" outcome="/secured/manageUser/users"/>
         </h:form>
     </h:body>

@@ -82,7 +82,16 @@ public class UserPresenter implements Serializable {
         this.user = userApp;
     }
     
+    public String addGroup(GroupApp group) {
+        this.user.getGroups().add(group);
+        return "/secured/manageUser/user?faces-redirect=true";
+    }
+    
     public void removeGroup(GroupApp group) {
         this.user.getGroups().remove(group);
+    }
+    
+    public List<GroupApp> avaibleGroups(UserApp user) {
+        return userService.avaibleGroups(user);
     }
 }

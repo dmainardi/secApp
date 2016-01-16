@@ -16,7 +16,9 @@
  */
 package com.dmainardi.secApp.business.boundary;
 
+import com.dmainardi.secApp.business.entity.GroupApp;
 import com.dmainardi.secApp.business.entity.UserApp;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -59,6 +61,22 @@ public class UserService {
         CriteriaQuery<UserApp> query = cb.createQuery(UserApp.class);
         Root<UserApp> root = query.from(UserApp.class);
         query.select(root);
+        return em.createQuery(query).getResultList();
+    }
+    
+    /**
+     * Return the groups list avaible for user
+     * @param user
+     * @return
+     */
+    public List<GroupApp> avaibleGroups(UserApp user) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<GroupApp> query = cb.createQuery(GroupApp.class);
+        Root<GroupApp> root = query.from(GroupApp.class);
+        if (!user.getGroups().isEmpty())
+            query.where(cb.not(root.in(user.getGroups())));
+        query.select(root);
+        
         return em.createQuery(query).getResultList();
     }
 }
